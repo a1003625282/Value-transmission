@@ -7,7 +7,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<passValueDelegate> //遵守协议
 
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,strong) UIButton *btn;
@@ -46,10 +46,9 @@
 -(void)btnClick{
     NextViewController *nextVC = [[NextViewController alloc]init];
     
-    // NSUserDefaults传值 -- 正向传值
-    [[NSUserDefaults standardUserDefaults] setObject:@"NSUserDefaults传值" forKey:@"NSUserDefaults"];
-    // 写数据之后要同步一下，他才能真正的写入我们的文件中
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    // 设置代理关系
+    // 两方如果通讯，要先将代理的关系给设置好
+    nextVC.delegate = self;
     
     [self.navigationController pushViewController:nextVC animated:YES];
     
@@ -57,11 +56,14 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    //NSUserDefaults传值 -- 接收页面2的反向传值
-    self.label.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSUserDefaults-re"];
-    
     [super viewWillAppear:animated];
     
+}
+
+// 代理传值 -- 实现协议方法 -- 接收来自页面2的值
+// 页面2的值就在参数传递的str
+- (void)passValue:(NSString *)str {
+    self.label.text = str;
 }
 
 - (void)viewDidLoad {

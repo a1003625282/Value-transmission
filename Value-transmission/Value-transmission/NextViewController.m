@@ -20,8 +20,7 @@
         _textField.textColor = [UIColor blackColor];
         _textField.borderStyle = UITextBorderStyleLine;
         
-        //NSUserDefaults传值 -- 从文件中读取并显示
-        _textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSUserDefaults"];
+
     }
     return _textField;
 }
@@ -38,17 +37,20 @@
     }
     return _btn;
 }
+
 // 页面2的点击事件 -- 回到页面1
 - (void)btnClick {
     
-    // NSUserDefaults传值 -- 反向传值
-    [[NSUserDefaults standardUserDefaults] setObject:self.textField.text forKey:@"NSUserDefaults-re"];
-    // 写数据之后要同步一下，他才能真正的写入我们的文件中
+    // 代理传值 -- 反向传值
+    // 通过id指针进行代理传值
+    [self.delegate passValue:self.textField.text];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.navigationController popViewControllerAnimated:YES];
 
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
    
@@ -56,5 +58,7 @@
     [self.view addSubview:self.textField];
     [self.view addSubview:self.btn];
 }
+
+
 
 @end
