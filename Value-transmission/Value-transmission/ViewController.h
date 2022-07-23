@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NextViewController.h"
+#import "DefaultInstance.h"
 @interface ViewController : UIViewController
 
 

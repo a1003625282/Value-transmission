@@ -6,7 +6,7 @@
 //
 
 #import "NextViewController.h"
-
+#import "DefaultInstance.h"
 @interface NextViewController ()
 @property(strong,nonatomic) UITextField *textField;
 @property(strong,nonatomic) UIButton *btn;
@@ -20,7 +20,7 @@
         _textField.textColor = [UIColor blackColor];
         _textField.borderStyle = UITextBorderStyleLine;
         
-        _textField.text = self.str;
+        _textField.text = [DefaultInstance sharedInstance].str;
     }
     return _textField;
 }
@@ -39,7 +39,11 @@
 }
 // 页面2的点击事件 -- 回到页面1
 - (void)btnClick {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // 单例传值 -- 反向传递
+    [DefaultInstance sharedInstance].str = self.textField.text;
+    
+    [self.navigationController popViewControllerAnimated:YES];
 
 }
 - (void)viewDidLoad {

@@ -23,6 +23,7 @@
     if(_label == nil){
         _label = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 200, 40)];
         _label.backgroundColor = [UIColor blackColor];
+        _label.textColor = [UIColor whiteColor];
         _label.font = [UIFont systemFontOfSize:20];
     }
     
@@ -45,15 +46,24 @@
 -(void)btnClick{
     NextViewController *nextVC = [[NextViewController alloc]init];
     
-    // 属性传值
-    nextVC.str = @"属性传值";
-    [self presentViewController:nextVC animated:YES completion:nil];
+    // 单例传值 -- 正向传递
+    [DefaultInstance sharedInstance].str = @"单例传值";
+    
+    [self.navigationController pushViewController:nextVC animated:YES];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    NSLog(@"页面1即将出现");
+    // 接收界面2的反向传值
+    self.label.text = [DefaultInstance sharedInstance].str;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.label];
     [self.view addSubview:self.btn];
