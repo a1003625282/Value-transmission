@@ -46,13 +46,19 @@
 -(void)btnClick{
     NextViewController *nextVC = [[NextViewController alloc]init];
     
-    // block传值 -- 实现block -- 接收来自页面2的值
-    nextVC.block = ^(NSString * str) {
-        self.label.text = str;
-    };
+    // 通知传值 -- 添加监听 -- 等待页面2的传值
+    // selector:我们接收到通知之后的处理
+    // name:通知的名字，要监听哪一个通知
+    // object:监听来自于哪里的通知,填nil的话表示广播群发的,任何一个发送方只要发送了一个叫notify通知我们都可以收到
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notHandle:) name:@"notify" object:nil];
     
     [self.navigationController pushViewController:nextVC animated:YES];
     
+}
+
+// 接受到通知之后的处理 -- 参数1：通知
+- (void)notHandle:(NSNotification *)not{
+    self.label.text = not.userInfo[@"not"];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
