@@ -20,7 +20,8 @@
         _textField.textColor = [UIColor blackColor];
         _textField.borderStyle = UITextBorderStyleLine;
         
-        _textField.text = [DefaultInstance sharedInstance].str;
+        //NSUserDefaults传值 -- 从文件中读取并显示
+        _textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"NSUserDefaults"];
     }
     return _textField;
 }
@@ -40,8 +41,10 @@
 // 页面2的点击事件 -- 回到页面1
 - (void)btnClick {
     
-    // 单例传值 -- 反向传递
-    [DefaultInstance sharedInstance].str = self.textField.text;
+    // NSUserDefaults传值 -- 反向传值
+    [[NSUserDefaults standardUserDefaults] setObject:self.textField.text forKey:@"NSUserDefaults-re"];
+    // 写数据之后要同步一下，他才能真正的写入我们的文件中
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.navigationController popViewControllerAnimated:YES];
 
