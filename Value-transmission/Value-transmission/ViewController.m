@@ -7,7 +7,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()<passValueDelegate> //遵守协议
+@interface ViewController ()
 
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,strong) UIButton *btn;
@@ -46,9 +46,10 @@
 -(void)btnClick{
     NextViewController *nextVC = [[NextViewController alloc]init];
     
-    // 设置代理关系
-    // 两方如果通讯，要先将代理的关系给设置好
-    nextVC.delegate = self;
+    // block传值 -- 实现block -- 接收来自页面2的值
+    nextVC.block = ^(NSString * str) {
+        self.label.text = str;
+    };
     
     [self.navigationController pushViewController:nextVC animated:YES];
     
@@ -60,11 +61,6 @@
     
 }
 
-// 代理传值 -- 实现协议方法 -- 接收来自页面2的值
-// 页面2的值就在参数传递的str
-- (void)passValue:(NSString *)str {
-    self.label.text = str;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

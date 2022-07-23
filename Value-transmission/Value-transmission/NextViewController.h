@@ -9,19 +9,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-// 委托方-创建一个协议
-@protocol passValueDelegate <NSObject>
 
-// 协议定义一个传值的方法
-- (void)passValue:(NSString *)str;
-
-@end
 @interface NextViewController : UIViewController
   
 @property (nonatomic, strong) NSString *str;
 
-// 定义一个id指针,他持有协议,指针的名字叫delegate
-@property (weak)id<passValueDelegate>delegate;
+//定义一个block进行页面反向传值
+// void:返回类型
+// block:block的名字
+// NSString *:block的参数
+@property (copy) void (^block)(NSString *);
+
 
 @end
 

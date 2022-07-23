@@ -41,11 +41,9 @@
 // 页面2的点击事件 -- 回到页面1
 - (void)btnClick {
     
-    // 代理传值 -- 反向传值
-    // 通过id指针进行代理传值
-    [self.delegate passValue:self.textField.text];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    // block传值 -- 反向传值
+    self.block(self.textField.text);
     
     [self.navigationController popViewControllerAnimated:YES];
 
